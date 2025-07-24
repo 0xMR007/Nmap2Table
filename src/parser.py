@@ -1,7 +1,17 @@
 import os
-import xml.etree.ElementTree as ET 
+import argparse
+import xml.etree.ElementTree as ET
 
 unknown = 'N/A'
+
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="Convert Nmap XML to Markdown",
+        usage="python -m src.main -i <NMAP_FILE>.xml -o <OUTPUT_FILE>.md"
+    )
+    parser.add_argument("-i", "--input", help="Nmap scan result in XML format")
+    parser.add_argument("-o", "--output",help="Output markdown file")
+    return parser.parse_args()
 
 class XMLParser:
 
@@ -46,7 +56,7 @@ class XMLParser:
                     service_name = service_elem.get("name" , "")
                     service_version = service_elem.get("version" , "")
                     service_product = service_elem.get("product" , "")
-                    full_version = service_product + service_version
+                    full_version = f"{service_product} {service_version}".strip()
                     service_extra_info = service_elem.get("extrainfo" , "")
 
                 scripts = {script.get("id", "") : script.get("output", "") for script in port.findall("script")}
@@ -58,7 +68,7 @@ class XMLParser:
                     "service" : service_name,
                     "version" : full_version,
                     "extrainfo" : service_extra_info,
-                    "scripts" : scripts if scripts else "",
+                    "scripts" : scripts if scripts else {},
                 })
 
             result.append({

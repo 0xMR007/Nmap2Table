@@ -12,7 +12,7 @@ class MarkdownUtil:
             scripts = port.get("scripts", {})
 
             if scripts:
-                block_lines.append(f"Port {port.get("port")} :")    
+                block_lines.append(f"Port {port.get('port')} :")    
                 for script_name, output in scripts.items():
                     line = f"{script_name}:\n{output}\n"
                     block_lines.append(line)
@@ -30,8 +30,8 @@ class MarkdownUtil:
             ports = host["ports"]
 
             lines.append(f"### Host : {ip} ({hostname})\n" if hostname else f"### Host : {ip}\n")
-            lines.append("| Port | Protocol | State | Service | Version |")
-            lines.append("|------|----------|-------|---------|---------|")
+            lines.append("| Port/Protocol | State | Service | Version |")
+            lines.append("|---------------|-------|---------|---------|")
 
             for port in ports:
 
@@ -41,13 +41,14 @@ class MarkdownUtil:
                 port_service = port.get("service")
                 port_version = port.get("version")
 
-                line = f"| {port_num} | {port_protocol} | {port_state} | {port_service} | {port_version}"
+                line = f"| {port_num}/{port_protocol} | {port_state} | {port_service} | {port_version}"
                 lines.append(line)
 
             block_lines = self.format_nse_script_block(ports)
             if len(block_lines) > 2:
                 lines = lines + block_lines
             
+            lines.append("\n")
         return lines
         
     def generate_file(self, data):
