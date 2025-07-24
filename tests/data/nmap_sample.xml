@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Test scan on a THM room -->
+<!-- Nmap 7.95 scan initiated Tue Jul 22 19:10:23 2025 as: /usr/lib/nmap/nmap -&#45;privileged -sC -sV -&#45;min-rate=1000 -p- -oX nmap_sample.xml 10.10.124.141 -->
+<nmaprun scanner="nmap" args="/usr/lib/nmap/nmap -&#45;privileged -sC -sV -&#45;min-rate=1000 -p- -oX nmap_sample.xml 10.10.124.141" start="1753204223" startstr="Tue Jul 22 19:10:23 2025" version="7.95" xmloutputversion="1.05">
+    <scaninfo type="syn" protocol="tcp" numservices="65535" services="1-65535"/>
+    <verbose level="0"/>
+    <debugging level="0"/>
+    <hosthint>
+        <status state="up" reason="unknown-response" reason_ttl="0"/>
+        <address addr="10.10.124.141" addrtype="ipv4"/>
+        <hostnames>
+        </hostnames>
+    </hosthint>
+    <host starttime="1753204223" endtime="1753204266">
+        <status state="up" reason="reset" reason_ttl="62"/>
+        <address addr="10.10.124.141" addrtype="ipv4"/>
+        <hostnames>
+        </hostnames>
+        <ports>
+            <extraports state="closed" count="65533">
+                <extrareasons reason="reset" count="65533" proto="tcp" ports="1-21,23-79,81-65535"/>
+            </extraports>
+            <port protocol="tcp" portid="22">
+                <state state="open" reason="syn-ack" reason_ttl="62"/>
+                <service name="ssh" product="OpenSSH" version="8.2p1 Ubuntu 4ubuntu0.11" extrainfo="Ubuntu Linux; protocol 2.0" ostype="Linux" method="probed" conf="10">
+                    <cpe>cpe:/a:openbsd:openssh:8.2p1</cpe>
+                    <cpe>cpe:/o:linux:linux_kernel</cpe>
+                </service>
+                <script id="ssh-hostkey" output="&#xa;  3072 c5:ae:16:35:e1:a2:bb:b9:5f:61:2f:f5:1d:26:25:d6 (RSA)&#xa;  256 a4:21:76:df:54:a6:ab:28:ec:a4:ef:25:e5:62:fe:14 (ECDSA)&#xa;  256 d4:ab:64:7a:2e:4d:6f:43:8d:9b:eb:f2:04:c5:c2:a7 (ED25519)">
+                    <table>
+                        <elem key="key">AAAAB3NzaC1yc2EAAAADAQABAAABgQCjFXwecc0xkVAsUsnlbBTIaVWKXBh/s6a8ugSjaPTz0vDgR0KH8BZtQll56eY8gsXVJHvX3urNrfvDSO0CxTUYWKpY6NqZHJeZOy9JztWbLGj+xllBW1RwW/dd4Vs0PyfBvCLNbpedZR1Hn4TBFQ6EeqGmVbMg57KCsFoVBRoTRUzrwZw03j2e4zjivTVHR0WQwVSgZb6s57kV9CYXRidRDSlommdRGf1J/CcJnRZH9O5ihA9NGRC8M07KW/inCyu9leqsuh99qM3nuMWt1N+p7jpKwVgRc3K9DgX9maIabLZSb/Y9H2cJaLN1cbbKZxAZQWhbFZ0Qk+B2tXh21GwXv+LIgYTu9vYq1nccN9c+2PKEYbiuG53poQtsCq7fmF6RqU/loUvCcWZgDgGwmPmJkL90jpA5oeDk1WpPxQoMH34Ss75gdti93xIqNcFaR0/3NTux7sm3A4dVhBXfszCkpNb5qA6y/9biZPVrA4XkKG5cx9sxAlIh/TS3w5jk/Vc=</elem>
+                        <elem key="type">ssh-rsa</elem>
+                        <elem key="bits">3072</elem>
+                        <elem key="fingerprint">c5ae1635e1a2bbb95f612ff51d2625d6</elem>
+                    </table>
+                    <table>
+                        <elem key="key">AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBO2DI8Qrknof5ZeEs6FFv18orKCs8mlylDHLgFeaiYh+QMy5+D+09sVFDw9G1UgqrWT7SpjQr4WCDwIkdU03z7E=</elem>
+                        <elem key="type">ecdsa-sha2-nistp256</elem>
+                        <elem key="bits">256</elem>
+                        <elem key="fingerprint">a42176df54a6ab28eca4ef25e562fe14</elem>
+                    </table>
+                    <table>
+                        <elem key="key">AAAAC3NzaC1lZDI1NTE5AAAAIFzph/OpL5Js0cWD+YCKtWOU+8zwfIz0WG8nlnFDu7Qm</elem>
+                        <elem key="type">ssh-ed25519</elem>
+                        <elem key="bits">256</elem>
+                        <elem key="fingerprint">d4ab647a2e4d6f438d9bebf204c5c2a7</elem>
+                    </table>
+                </script>
+            </port>
+            <port protocol="tcp" portid="80">
+                <state state="open" reason="syn-ack" reason_ttl="62"/>
+                <service name="http" product="Apache httpd" version="2.4.41" extrainfo="(Ubuntu)" method="probed" conf="10">
+                    <cpe>cpe:/a:apache:http_server:2.4.41</cpe>
+                </service>
+                <script id="http-title" output="Rick is sup4r cool">
+                    <elem key="title">Rick is sup4r cool</elem>
+                </script>
+                <script id="http-server-header" output="Apache/2.4.41 (Ubuntu)">
+                    <elem>Apache/2.4.41 (Ubuntu)</elem>
+                </script>
+            </port>
+        </ports>
+        <times srtt="42446" rttvar="645" to="100000"/>
+    </host>
+    <runstats>
+        <finished time="1753204266" timestr="Tue Jul 22 19:11:06 2025" summary="Nmap done at Tue Jul 22 19:11:06 2025; 1 IP address (1 host up) scanned in 42.75 seconds" elapsed="42.75" exit="success"/>
+        <hosts up="1" down="0" total="1"/>
+    </runstats>
+</nmaprun>
