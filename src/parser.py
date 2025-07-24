@@ -18,6 +18,11 @@ class XMLParser:
     FILE_PATH = "./tests/data/nmap_sample.xml"
 
     def __init__(self, file_path=FILE_PATH):
+
+        file_path = os.path.abspath(file_path)
+        if not os.path.isfile(file_path):
+            raise FileNotFoundError(f"File not found : {file_path}")
+        
         self.file = file_path
         self.tree = ET.parse(file_path)
         self.root = self.tree.getroot()
