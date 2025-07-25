@@ -17,7 +17,27 @@ class MarkdownUtil:
                     line = f"{script_name}:\n{output}\n"
                     block_lines.append(line)
         
-        block_lines.append("```")
+        return block_lines
+
+    def format_hops_block(self, traceroute_port, traceroute_protocol, hops):
+
+        first_line = f"\nTRACEROUTE (using port {traceroute_port}/{traceroute_protocol})"
+        second_line = f"{"HOP":<3} {"RTT":<10} {"ADDRESS":<20}"
+
+        block_lines = [first_line, second_line]
+
+        for hop in hops:
+            ttl = hop.get("ttl", "")
+            rtt = hop.get("rtt", "")
+            ip = hop.get("ipaddr", "")
+
+            print(f"TTL : {ttl}")
+            print(f"RTT : {rtt}")
+            print(f"IP : {ip}")
+
+            if ttl and rtt and ip:
+                block_lines.append(f"{ttl:<3} {rtt + ' ms':<10} {ip:<20}")    
+        
         return block_lines
     
     def generate_markdown(self, nmap_data):
@@ -44,10 +64,21 @@ class MarkdownUtil:
                 line = f"| {port_num}/{port_protocol} | {port_state} | {port_service} | {port_version}"
                 lines.append(line)
 
-            block_lines = self.format_nse_script_block(ports)
-            if len(block_lines) > 2:
+            
+            traceroute_port = host["traceroute_port"]
+            traceroute_protocol = host["traceroute_protocol"]
+            hops = host["hops"]
+
+            hops_block_lines = self.format_hops_block(traceroute_port, traceroute_protocol, hops)
+            print(hops_block_lines)
+
+            nse_block_lines = self.format_nse_script_block(ports)
+            if len(nse_block_lines) > 2:
                 lines.append(f"\n### NSE Scripts :\n")
-                lines = lines + block_lines
+                if len(hops_block_lines) > 2:
+                    lines = lines + nse_block_lines + hops_block_lines + ["```"]
+                else:
+                    lines = lines + nse_block_lines + ["```"]
             
             lines.append("\n")
         return lines
@@ -58,7 +89,7 @@ class MarkdownUtil:
             print("No data to write. Quitting.")
             return False
         
-        print(f"Generating output to {os.path.abspath(self.output_file)}")
+        print(f"\nGenerating markdown file to {os.path.abspath(self.output_file)}")
         
         with open(self.output_file, "w") as file:
             for line in lines:
