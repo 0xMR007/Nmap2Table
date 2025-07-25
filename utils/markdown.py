@@ -70,7 +70,6 @@ class MarkdownUtil:
             hops = host["hops"]
 
             hops_block_lines = self.format_hops_block(traceroute_port, traceroute_protocol, hops)
-            print(hops_block_lines)
 
             nse_block_lines = self.format_nse_script_block(ports)
             if len(nse_block_lines) > 2:
